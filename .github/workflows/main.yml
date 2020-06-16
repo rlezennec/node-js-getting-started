@@ -1,4 +1,4 @@
-- name: Deploy to Heroku
+name: Deploy to Heroku
   uses: AkhileshNS/heroku-deploy@v3.0.5
   with:
     # This will be used for authentication. You can find it in your heroku homepage account settings
