@@ -1,21 +1,26 @@
-name: Deploy to Heroku
-  uses: AkhileshNS/heroku-deploy@v3.0.5
-  with:
-    # This will be used for authentication. You can find it in your heroku homepage account settings
-    heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-    # Email that you use with heroku
-    heroku_email: rlezennec@salesforce.com
-    # The appname to use for deploying/updating
-    heroku_app_name: bfo-myapp
-    # An optional buildpack to use when creating the heroku application
-    buildpack: # optional
-    # The branch that you would like to deploy to Heroku
-    branch: # optional, default is HEAD
-    # Set this to true if you don't want to use --force when switching branches
-    dontuseforce: # optional
-    # Will deploy using Dockerfile in project root.
-    usedocker: # optional
-    # Type of heroku process (web, worker, etc). This option only makes sense when usedocker enabled
-    docker_heroku_process_type: # optional, default is web
-    # Set if your app is located in a subdirectory.
-    appdir: # optional, default is 
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.0.5 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "bfo-myapp" #Must be unique in Heroku
+          heroku_email: "lezennec@salesforce.com"
+          #buildpack: "SOME BUILDPACK" #OPTIONAL
+          #branch: "YOUR_BRANCH" #OPTIONAL and DEFAULT - 'HEAD' (a.k.a your current branch)
+          dontuseforce: false #OPTIONAL and DEFAULT - false
+          usedocker: false #OPTIONAL and DEFAULT - false
+          #appdir: "" #OPTIONAL and DEFAULT - "". This is useful if the api you're deploying is in a subfolder
+          #docker_heroku_process_type: "" #OPTIONAL and DEFAULT - "web"
+
+
+
